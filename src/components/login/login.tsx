@@ -1,8 +1,10 @@
 // src/components/Home.tsx
 import React, { useState } from "react";
 import styles from "./Login.module.css";
+import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState<string>("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -12,6 +14,7 @@ const Login: React.FC = () => {
   const handleButtonClick = () => {
     if (name.trim()) {
       alert(`Bem-vindo, ${name}!`);
+      navigate("/home");
     } else {
       alert("Por favor, insira seu nome.");
     }
