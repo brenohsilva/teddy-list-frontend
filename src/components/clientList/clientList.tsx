@@ -2,18 +2,21 @@
 import React, { useState } from "react";
 import CardClient from "../cardClient/cardClient";
 import DeleteModal from "../modals/deleteModal";
+import CreateClientModal from "../modals/createModal";
 
 
 const ClientList: React.FC = () => {
 
-  const clients = [
-    { name: "João Silva", salary: 4000, companyValue: 900000 },
-    { name: "Maria Santos", salary: 4500, companyValue: 1200000 },
-    { name: "Carlos Oliveira", salary: 3800, companyValue: 750000 },
-  ];
+    const [clients, setClients] = useState([
+        { name: "João Silva", salary: 4000, companyValue: 900000 },
+        { name: "Maria Santos", salary: 4500, companyValue: 1200000 },
+        { name: "Carlos Oliveira", salary: 3800, companyValue: 750000 },
+      ])
 
   const [selectedClient, setSelectedClient] = useState<string | null>(null)
+  const [isCreateModalOpen, setCreateModalOpen] = useState<boolean>(false);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [newClient, setNewClient] = useState({ name: "", salary: 0, companyValue: 0 });
 
   const handleDeleteClick = (name: string) => {
     setSelectedClient(name);
@@ -30,6 +33,15 @@ const ClientList: React.FC = () => {
     handleCloseModal();
   };
 
+  const handleOpenCreateModal = () => setCreateModalOpen(true);
+  const handleCloseCreateModal = () => setCreateModalOpen(false);
+
+  const handleCreateClient = () => {
+    setClients([...clients, newClient]);
+    setCreateModalOpen(false);
+    setNewClient({ name: "", salary: 0, companyValue: 0 });
+  };
+
 
   const handleSelect = (name: string) => {
     alert(`Cliente ${name} selecionado!`);
@@ -42,7 +54,7 @@ const ClientList: React.FC = () => {
 
   return (
     <div className="container mt-5">
-      <h2 className="mb-4">Lista de Clientes</h2>
+      <h5 className="mb-4 fw-normal"><strong>{clients.length} </strong>Clientes encontrados:</h5>
       <div className="row">
         {clients.map((client, index) => (
           <div key={index} className="col-md-4">
@@ -57,12 +69,20 @@ const ClientList: React.FC = () => {
           </div>
         ))}
       </div>
+      <div className="d-flex justify-content-center w-100 mt-5">
+        <button className="btn btn-primary w-100" onClick={handleOpenCreateModal}>
+          Criar Cliente
+        </button>
+      </div>
       {isModalOpen && selectedClient && (
         <DeleteModal
           clientName={selectedClient}
           onClose={handleCloseModal}
           onConfirm={handleConfirmDelete}
         />
+      )}
+      {isCreateModalOpen && (
+        <CreateClientModal onClose={handleCloseCreateModal} onCreate={handleCreateClient} />
       )}
     </div>
   );
