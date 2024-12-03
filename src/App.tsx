@@ -1,9 +1,12 @@
-import './App.css'
-import Home from './components/home/home'
+import Header from './components/header/header'
+import Login from './components/login/login'
 
 function App() {
 
-  return <Home></Home>
+  return <div>
+    <Header username="Usuário" ></Header>
+    <Login></Login>
+  </div>
 }
 
 export default App
