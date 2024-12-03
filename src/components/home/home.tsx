@@ -18,8 +18,8 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.heading}>Olá, seja bem-vindo!</h1>
+    <div className="d-flex flex-column justify-content-center align-items-center vh-100">
+      <h1 className="mb-3 fs-4">Olá, seja bem-vindo!</h1>
       <input
         type="text"
         placeholder="Digite seu nome"
