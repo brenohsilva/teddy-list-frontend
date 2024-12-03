@@ -9,10 +9,7 @@ const Login: React.FC = () => {
   const [name, setName] = useState<string>("");
   const { setUsername } = useUser();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-
+  
   const handleButtonClick = () => {
     if (name.trim()) {
       alert(`Bem-vindo, ${name}!`);
