@@ -1,6 +1,7 @@
 
-import React from "react";
+import React, { useState } from "react";
 import CardClient from "../cardClient/cardClient";
+import DeleteModal from "../modals/deleteModal";
 
 
 const ClientList: React.FC = () => {
@@ -11,6 +12,24 @@ const ClientList: React.FC = () => {
     { name: "Carlos Oliveira", salary: 3800, companyValue: 750000 },
   ];
 
+  const [selectedClient, setSelectedClient] = useState<string | null>(null)
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+
+  const handleDeleteClick = (name: string) => {
+    setSelectedClient(name);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedClient(null);
+    setModalOpen(false);
+  };
+
+  const handleConfirmDelete = () => {
+    alert(`Cliente ${selectedClient} excluído!`);
+    handleCloseModal();
+  };
+
 
   const handleSelect = (name: string) => {
     alert(`Cliente ${name} selecionado!`);
@@ -20,9 +39,6 @@ const ClientList: React.FC = () => {
     alert(`Editar cliente: ${name}`);
   };
 
-  const handleDelete = (name: string) => {
-    alert(`Excluir cliente: ${name}`);
-  };
 
   return (
     <div className="container mt-5">
@@ -36,11 +52,18 @@ const ClientList: React.FC = () => {
               companyValue={client.companyValue}
               onSelect={() => handleSelect(client.name)}
               onEdit={() => handleEdit(client.name)}
-              onDelete={() => handleDelete(client.name)}
+              onDelete={() => handleDeleteClick(client.name)}
             />
           </div>
         ))}
       </div>
+      {isModalOpen && selectedClient && (
+        <DeleteModal
+          clientName={selectedClient}
+          onClose={handleCloseModal}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
     </div>
   );
 };
