@@ -2,10 +2,12 @@
 import React, { useState } from "react";
 import styles from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [name, setName] = useState<string>("");
+  const { setUsername } = useUser();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -14,6 +16,7 @@ const Login: React.FC = () => {
   const handleButtonClick = () => {
     if (name.trim()) {
       alert(`Bem-vindo, ${name}!`);
+      setUsername(name);
       navigate("/home");
     } else {
       alert("Por favor, insira seu nome.");
@@ -27,7 +30,7 @@ const Login: React.FC = () => {
         type="text"
         placeholder="Digite seu nome"
         value={name}
-        onChange={handleInputChange}
+        onChange={(e) => setName(e.target.value)}
         className={styles.input}
       />
       <button onClick={handleButtonClick} className={styles.button}>

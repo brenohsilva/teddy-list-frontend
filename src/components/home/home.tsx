@@ -1,13 +1,12 @@
 // src/components/Home.tsx
+import { useUser } from "../context/UserContext";
 import Header from "../header/header";
-import styles from "./Home.module.css";
-
 const Home: React.FC = () => {
-
+  const { username } = useUser();
 
   return (
     <div>
-      <Header username="Usuário" ></Header>
+      <Header username={username} ></Header>
     </div>
   );
 };
