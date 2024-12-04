@@ -4,7 +4,6 @@ import DeleteModal from "../modals/deleteModal";
 import CreateClientModal from "../modals/createModal";
 import EditClientModal from "../modals/editClientModal";
 
-import styles from "./clientList.module.css";
 import {
   Client,
   createClient,

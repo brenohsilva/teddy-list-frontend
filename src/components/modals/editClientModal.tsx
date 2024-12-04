@@ -2,25 +2,43 @@
 import React, { useState } from "react";
 
 interface EditClientModalProps {
-  client: { id: string; firstName: string; salary: string; companyValue: string }; 
-  onClose: () => void; 
-  onUpdate: (updatedClient: { id: string; firstName: string; salary: string; companyValue: string }) => void; 
+  client: { id: string; firstName: string; salary: string; companyValue: string };
+  onClose: () => void;
+  onUpdate: (updatedClient: { id: string; firstName: string; salary: string; companyValue: string }) => void;
 }
 
 const EditClientModal: React.FC<EditClientModalProps> = ({ client, onClose, onUpdate }) => {
   const [updatedClient, setUpdatedClient] = useState(client);
 
-  const handleInputChange = (field: string, value: string | number) => {
-    setUpdatedClient({ ...updatedClient, [field]: value });
+  const formatToCurrency = (value: string) => {
+    if (!value) return ""; 
+    const numericValue = value.replace(/\D/g, ""); 
+    if (!numericValue) return ""; 
+    const formattedValue = (Number(numericValue) / 100).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+    return formattedValue;
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    if (field === "salary" || field === "companyValue") {
+      setUpdatedClient({ ...updatedClient, [field]: formatToCurrency(value) }); // Formata o valor
+    } else {
+      setUpdatedClient({ ...updatedClient, [field]: value });
+    }
   };
 
   const handleUpdate = () => {
-    if (updatedClient.firstName.trim() && updatedClient.salary && updatedClient.companyValue) {
-      onUpdate(updatedClient); 
-      onClose(); 
-    } else {
+    const { firstName, salary, companyValue } = updatedClient;
+
+    if (!firstName.trim() || !salary.trim() || !companyValue.trim()) {
       alert("Por favor, preencha todos os campos corretamente.");
+      return;
     }
+
+    onUpdate(updatedClient);
+    onClose();
   };
 
   return (
@@ -51,7 +69,7 @@ const EditClientModal: React.FC<EditClientModalProps> = ({ client, onClose, onUp
                 type="text"
                 className="form-control"
                 placeholder="Digite o Salário:"
-                value={updatedClient.salary}
+                value={updatedClient.salary || ""}
                 onChange={(e) => handleInputChange("salary", e.target.value)}
               />
             </div>
@@ -60,7 +78,7 @@ const EditClientModal: React.FC<EditClientModalProps> = ({ client, onClose, onUp
                 type="text"
                 className="form-control"
                 placeholder="Digite o valor da Empresa:"
-                value={updatedClient.companyValue}
+                value={updatedClient.companyValue || ""}
                 onChange={(e) => handleInputChange("companyValue", e.target.value)}
               />
             </div>

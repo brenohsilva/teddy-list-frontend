@@ -13,8 +13,22 @@ const CreateClientModal: React.FC<CreateClientModalProps> = ({
   newClient,
   setNewClient,
 }) => {
+  // Função para formatar como moeda
+  const formatToCurrency = (value: string) => {
+    const numericValue = value.replace(/\D/g, ""); // Remove tudo que não for número
+    const formattedValue = (Number(numericValue) / 100).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+    return formattedValue;
+  };
+
   const handleInputChange = (field: string, value: string) => {
-    setNewClient({ ...newClient, [field]: value });
+    if (field === "salary" || field === "companyValue") {
+      setNewClient({ ...newClient, [field]: formatToCurrency(value) }); // Formata o valor
+    } else {
+      setNewClient({ ...newClient, [field]: value });
+    }
   };
 
   const handleCreate = () => {
