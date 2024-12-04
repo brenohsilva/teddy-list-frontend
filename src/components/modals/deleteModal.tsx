@@ -13,15 +13,15 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ clientName, onClose, onConfir
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="d-flex justify-content-between p-2 m-2">
-            <h5 className="modal-title">Excluir Cliente</h5>
+            <h5 className="modal-title fw-bold">Excluir Cliente:</h5>
             <button className="btn-close" onClick={onClose}></button>
           </div>
           <div className="mx-3 m-0 p-0">
-            <p>Você está prestes a excluir o cliente: <strong>{clientName}</strong>.</p>
+            <p className="fs-5">Você está prestes a excluir o cliente: <strong>{clientName}</strong>.</p>
           </div>
           <div className="d-flex justify-content-between mx-3 my-2">
 
-            <button className="btn btn-danger w-100" onClick={onConfirm}>
+            <button className="btn buttonAction w-100" onClick={onConfirm}>
               Excluir cliente
             </button>
           </div>

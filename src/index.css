@@ -16,3 +16,16 @@ header {
 p{
     color: black;
 }
+
+.buttonAction {
+    border: 1px solid #ec6724;
+    font-weight: 600;
+    background-color: #ec6724;
+    color: white;
+}
+
+.buttonAction:hover{
+    background-color: #d65b1d ;
+    color: white;
+    
+}
