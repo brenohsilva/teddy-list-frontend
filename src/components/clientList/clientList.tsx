@@ -113,7 +113,7 @@ const ClientList: React.FC = () => {
       </h5>
       <div className="row">
         {clientList.map((client) => (
-          <div key={client.id} className="col-md-3">
+          <div key={client.id} className="col-md-5 col-lg-3">
             <CardClient
               name={client.firstName}
               salary={client.salary}
@@ -128,7 +128,7 @@ const ClientList: React.FC = () => {
       </div>
       <div className="d-flex justify-content-center w-100 mt-5">
         <button
-          className={`btn btn-none w-100 ${styles.buttonColor}`}
+          className="btn btn-none w-100 buttonPrimaryColor"
           onClick={handleOpenCreateModal}
         >
           Criar Cliente

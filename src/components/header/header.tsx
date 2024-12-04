@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./header.module.css";
 
 interface HeaderProps {
@@ -7,11 +7,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ username }) => {
-  const [activeNav, setActiveNav] = useState<string>("clientes");
-
-  const handleNavClick = (nav: string) => {
-    setActiveNav(nav);
-  };
+  const location = useLocation(); 
 
   return (
     <header className="border-bottom shadow-sm">
@@ -28,27 +24,30 @@ const Header: React.FC<HeaderProps> = ({ username }) => {
           <Link
             to="/home"
             className={`text-decoration-none ${
-              activeNav === "clientes" ? "fw-normal text-decoration-underline" : "text-black"
+              location.pathname === "/home"
+                ? "fw-normal text-decoration-underline"
+                : "text-black"
             }`}
-            onClick={() => handleNavClick("clientes")}
           >
             Clientes
           </Link>
           <Link
             to="/clientes-selecionados"
             className={`text-decoration-none ${
-              activeNav === "clientes-selecionados" ? "fw-normal text-decoration-underline" : "text-black"
+              location.pathname === "/clientes-selecionados"
+                ? "fw-normal text-decoration-underline"
+                : "text-black"
             }`}
-            onClick={() => handleNavClick("clientes-selecionados")}
           >
             Clientes Selecionados
           </Link>
           <Link
             to="/"
             className={`text-decoration-none ${
-              activeNav === "sair" ? "fw-normal text-decoration-underline" : "text-black"
+              location.pathname === "/"
+                ? "fw-normal text-decoration-underline"
+                : "text-black"
             }`}
-            onClick={() => handleNavClick("sair")}
           >
             Sair
           </Link>
