@@ -14,8 +14,8 @@ const Header: React.FC<HeaderProps> = ({ username }) => {
       <div className="d-flex container border-0 justify-content-between align-items-center p-3 px-5">
         <div className="logo">
           <img
-            src="/logo.png"
-            alt="Logo"
+            src="src\assets\teddy-logo.jpeg"
+            alt="Logo Teddy"
             style={{ height: "40px" }}
             className="me-3"
           />
