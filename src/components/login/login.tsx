@@ -12,7 +12,6 @@ const Login: React.FC = () => {
   
   const handleButtonClick = () => {
     if (name.trim()) {
-      alert(`Bem-vindo, ${name}!`);
       setUsername(name);
       navigate("/home");
     } else {
