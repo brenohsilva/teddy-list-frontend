@@ -25,7 +25,7 @@ const Login: React.FC = () => {
       <h1 className={styles.heading}>Olá, seja bem-vindo!</h1>
       <input
         type="text"
-        placeholder="Digite seu nome"
+        placeholder="Digite seu nome:"
         value={name}
         onChange={(e) => setName(e.target.value)}
         className={styles.input}
