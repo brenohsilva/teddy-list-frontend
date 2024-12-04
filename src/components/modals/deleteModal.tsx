@@ -21,7 +21,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ clientName, onClose, onConfir
           </div>
           <div className="d-flex justify-content-between mx-3 my-2">
 
-            <button className="btn buttonAction w-100" onClick={onConfirm}>
+            <button className="btn button-action w-100" onClick={onConfirm}>
               Excluir cliente
             </button>
           </div>

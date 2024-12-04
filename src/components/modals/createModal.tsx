@@ -85,7 +85,7 @@ const CreateClientModal: React.FC<CreateClientModalProps> = ({
             </div>
           </div>
           <div className="m-3">
-            <button className="btn buttonAction w-100" onClick={handleCreate}>
+            <button className="btn button-action w-100" onClick={handleCreate}>
               Criar Cliente
             </button>
           </div>
