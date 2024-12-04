@@ -1,0 +1,14 @@
+.clientList{
+    background-color: #000000;
+}
+
+.buttonColor {
+    border: 1px solid #ec6724;
+    font-weight: 600;
+    color: #ec6724;
+}
+
+.buttonColor:hover{
+    background-color: #ec6724 ;
+    
+}

@@ -3,13 +3,14 @@ import React, { useState } from "react";
 import CardClient from "../cardClient/cardClient";
 import DeleteModal from "../modals/deleteModal";
 import CreateClientModal from "../modals/createModal";
-
+import  styles from "./clientList.module.css";
 
 const ClientList: React.FC = () => {
 
     const [clients, setClients] = useState([
         { name: "João Silva", salary: 4000, companyValue: 900000 },
         { name: "Maria Santos", salary: 4500, companyValue: 1200000 },
+        { name: "Carlos Oliveira", salary: 3800, companyValue: 750000 },
         { name: "Carlos Oliveira", salary: 3800, companyValue: 750000 },
       ])
 
@@ -51,13 +52,12 @@ const ClientList: React.FC = () => {
     alert(`Editar cliente: ${name}`);
   };
 
-
   return (
-    <div className="container mt-5">
-      <h5 className="mb-4 fw-normal"><strong>{clients.length} </strong>Clientes encontrados:</h5>
+    <div className=" clientList container mt-5 ">
+      <h5 className="mb-4 fw-normal"><strong>{clients.length} </strong>clientes encontrados:</h5>
       <div className="row">
         {clients.map((client, index) => (
-          <div key={index} className="col-md-4">
+          <div key={index} className="col-md-3 ">
             <CardClient
               name={client.name}
               salary={client.salary}
@@ -70,7 +70,7 @@ const ClientList: React.FC = () => {
         ))}
       </div>
       <div className="d-flex justify-content-center w-100 mt-5">
-        <button className="btn btn-primary w-100" onClick={handleOpenCreateModal}>
+        <button className={`btn btn-none w-100 ${styles.buttonColor}`} onClick={handleOpenCreateModal}>
           Criar Cliente
         </button>
       </div>
