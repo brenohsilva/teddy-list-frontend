@@ -1,5 +1,6 @@
 // src/components/Header.tsx
 import React, { useState } from "react";
+import "./header.module.css";
 interface HeaderProps {
   username: string;
 }
@@ -25,21 +26,21 @@ const Header: React.FC<HeaderProps> = ({ username }) => {
       <nav className="d-flex gap-4 ">
         <a
           href="#clientes"
-          className={`text-decoration-none  ${activeNav === "clientes" ? "text-success fw-bold text-decoration-underline" : "text-black"}`}
+          className={`text-decoration-none  ${activeNav === "clientes" ? " fw-normal text-decoration-underline" : "text-black"}`}
           onClick={() => handleNavClick("clientes")}
         >
           Clientes
         </a>
         <a
           href="#clientes-selecionados"
-          className={`text-decoration-none  ${activeNav === "clientes-selecionados" ? "text-success fw-bold text-decoration-underline" : "text-black"}`}
+          className={`text-decoration-none  ${activeNav === "clientes-selecionados" ? " fw-normal text-decoration-underline" : "text-black"}`}
           onClick={() => handleNavClick("clientes-selecionados")}
         >
           Clientes Selecionados
         </a>
         <a
           href="/"
-          className={`text-decoration-none  ${activeNav === "sair" ? "text-success fw-bold text-decoration-underline" : "text-black"}`}
+          className={`text-decoration-none  ${activeNav === "sair" ? " fw-normal text-decoration-underline" : "text-black"}`}
           onClick={() => handleNavClick("sair")}
         >
           Sair
