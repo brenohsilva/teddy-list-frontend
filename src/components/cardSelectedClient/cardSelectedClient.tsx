@@ -36,7 +36,7 @@ const SelectedClientCard: React.FC<SelectedClientCardProps> = ({
             className="btn text-danger d-flex align-items-center gap-1"
             onClick={onRemove}
           >
-            <i className="bi bi-trash"></i> 
+            <i className="bi bi-dash-lg"></i>
           </button>
         </div>
       </div>
