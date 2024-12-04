@@ -43,7 +43,7 @@ const EditClientModal: React.FC<EditClientModalProps> = ({ client, onClose, onUp
                 className="form-control"
                 placeholder="Digite o nome:"
                 value={updatedClient.firstName}
-                onChange={(e) => handleInputChange("name", e.target.value)}
+                onChange={(e) => handleInputChange("firstName", e.target.value)}
               />
             </div>
             <div className="mb-3">
