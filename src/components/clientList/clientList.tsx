@@ -5,7 +5,13 @@ import CreateClientModal from "../modals/createModal";
 import EditClientModal from "../modals/editClientModal";
 
 import styles from "./clientList.module.css";
-import { Client, createClient, deleteClient, getClients, updateClient } from "../../api/clientService";
+import {
+  Client,
+  createClient,
+  deleteClient,
+  getClients,
+  updateClient,
+} from "../../api/clientService";
 import { useSelectedClients } from "../context/SelectedClientContext";
 
 const ClientList: React.FC = () => {
@@ -48,7 +54,9 @@ const ClientList: React.FC = () => {
     if (selectedClient) {
       try {
         await deleteClient(selectedClient.id);
-        setClientList(clientList.filter((client) => client.id !== selectedClient.id));
+        setClientList(
+          clientList.filter((client) => client.id !== selectedClient.id)
+        );
         handleCloseDeleteModal();
       } catch (error) {
         console.error("Erro ao excluir cliente:", error);
@@ -110,12 +118,10 @@ const ClientList: React.FC = () => {
               name={client.firstName}
               salary={client.salary}
               companyValue={client.companyValue}
-             
               onEdit={() => handleOpenEditModal(client)}
               onDelete={() => handleOpenDeleteModal(client)}
               isSelected={selectedClients.some((c) => c.id === client.id)}
               onSelect={() => handleSelectClient(client)}
-              
             />
           </div>
         ))}
