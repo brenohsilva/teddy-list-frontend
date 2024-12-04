@@ -17,28 +17,39 @@ p{
     color: black;
 }
 
-.buttonAction {
+.button-action {
     border: 1px solid #ec6724;
     font-weight: 600;
     background-color: #ec6724;
     color: white;
 }
 
-.buttonAction:hover{
+.button-action:hover{
     background-color: #d65b1d ;
     color: white;
     
 }
 
-.buttonPrimaryColor {
+.button-primary-color {
     border: 1px solid #ec6724;
     font-weight: 600;
     color: #ec6724;
 }
 
-.buttonPrimaryColor:hover{
+.button-primary-color:hover{
     background-color: #ec6724 ;
     
+}
+
+.button-pagination {
+    font-weight: 600;
+    color: #000000;
+}
+
+.button-pagination-active {
+    font-weight: 600;
+    background-color: #ec6724;
+    color: white;
 }
 
 nav a {

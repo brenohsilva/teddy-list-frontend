@@ -84,7 +84,7 @@ const EditClientModal: React.FC<EditClientModalProps> = ({ client, onClose, onUp
             </div>
           </div>
           <div className="m-3">
-            <button className="btn buttonAction w-100" onClick={handleUpdate}>
+            <button className="btn button-action w-100" onClick={handleUpdate}>
               Editar Cliente
             </button>
           </div>

@@ -53,7 +53,7 @@ const SelectedClientList: React.FC = () => {
         {selectedClients.length > 0 && (
           <div className="d-flex justify-content-center w-100 mt-5">
             <button
-              className={`btn buttonPrimaryColor w-100`}
+              className={`btn button-primary-color w-100`}
               onClick={clearClients}
             >
               Limpar clientes selecionados
