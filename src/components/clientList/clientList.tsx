@@ -1,97 +1,91 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CardClient from "../cardClient/cardClient";
 import DeleteModal from "../modals/deleteModal";
 import CreateClientModal from "../modals/createModal";
 import EditClientModal from "../modals/editClientModal";
+
 import styles from "./clientList.module.css";
+import { Client, createClient, deleteClient, getClients, updateClient } from "../../api/clientService";
 
 const ClientList: React.FC = () => {
-  const [clientList, setClientList] = useState([
-    { id: "1", name: "João Silva", salary: "4000", companyValue: "900000" },
-    { id: "2", name: "Maria Santos", salary: "4500", companyValue: "1200000" },
-    { id: "3", name: "Carlos Oliveira", salary: "3800", companyValue: "750000" },
-    { id: "4", name: "Carlos Oliveira", salary: "3800", companyValue: "750000" },
-  ]);
-
+  const [clientList, setClientList] = useState<Client[]>([]);
   const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false);
   const [modalCreateIsOpen, setModalCreateIsOpen] = useState(false);
   const [modalEditIsOpen, setModalEditIsOpen] = useState(false);
-
-  const [selectedClientName, setSelectedClientName] = useState<string | null>(null);
-  const [editingClient, setEditingClient] = useState<{
-    id: string;
-    name: string;
-    salary: string;
-    companyValue: string;
-  } | null>(null);
-
-  const [newClient, setNewClient] = useState({
-    name: "",
+  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
+  const [newClient, setNewClient] = useState<Omit<Client, "id">>({
+    firstName: "",
     salary: "",
     companyValue: "",
   });
 
-  const handleOpenDeleteModal = (name: string) => {
-    setSelectedClientName(name);
+  useEffect(() => {
+    const fetchClients = async () => {
+      try {
+        const clients = await getClients();
+        setClientList(clients);
+      } catch (error) {
+        console.error("Erro ao buscar clientes:", error);
+      }
+    };
+
+    fetchClients();
+  }, []);
+
+  const handleOpenDeleteModal = (client: Client) => {
+    setSelectedClient(client);
     setModalDeleteIsOpen(true);
   };
 
   const handleCloseDeleteModal = () => {
-    setSelectedClientName(null);
+    setSelectedClient(null);
     setModalDeleteIsOpen(false);
   };
 
-  const handleConfirmDelete = () => {
-    setClientList(clientList.filter((client) => client.name !== selectedClientName));
-    handleCloseDeleteModal();
+  const handleConfirmDelete = async () => {
+    if (selectedClient) {
+      try {
+        await deleteClient(selectedClient.id);
+        setClientList(clientList.filter((client) => client.id !== selectedClient.id));
+        handleCloseDeleteModal();
+      } catch (error) {
+        console.error("Erro ao excluir cliente:", error);
+      }
+    }
   };
 
   const handleOpenCreateModal = () => setModalCreateIsOpen(true);
   const handleCloseCreateModal = () => setModalCreateIsOpen(false);
 
-  const handleCreateClient = () => {
-    setClientList([
-      ...clientList,
-      {
-        id: String(Date.now()), // Gera um ID único
-        ...newClient,
-      },
-    ]);
-    setModalCreateIsOpen(false);
-    setNewClient({ name: "", salary: "", companyValue: "" });
+  const handleCreateClient = async () => {
+    try {
+      const createdClient = await createClient(newClient);
+      setClientList([...clientList, createdClient]);
+      setNewClient({ firstName: "", salary: "", companyValue: "" });
+      handleCloseCreateModal();
+    } catch (error) {
+      console.error("Erro ao criar cliente:", error);
+    }
   };
 
-  const handleOpenEditModal = (client: {
-    id: string;
-    name: string;
-    salary: string;
-    companyValue: string;
-  }) => {
-    setEditingClient(client);
+  const handleOpenEditModal = (client: Client) => {
+    setSelectedClient(client);
     setModalEditIsOpen(true);
   };
 
   const handleCloseEditModal = () => {
-    setEditingClient(null);
+    setSelectedClient(null);
     setModalEditIsOpen(false);
   };
 
-  const handleUpdateClient = (updatedClient: {
-    id: string;
-    name: string;
-    salary: string;
-    companyValue: string;
-  }) => {
-    setClientList((prevClients) =>
-      prevClients.map((client) =>
-        client.id === updatedClient.id ? updatedClient : client
-      )
-    );
-    handleCloseEditModal();
-  };
-
-  const handleSelectClient = (name: string) => {
-    alert(`Cliente ${name} selecionado!`);
+  const handleUpdateClient = async (updatedClient: Client) => {
+    try {
+      const client = await updateClient(updatedClient.id, updatedClient);
+      setClientList(clientList.map((c) => (c.id === client.id ? client : c)));
+      handleCloseEditModal();
+    } catch (error) {
+      console.error("Erro ao atualizar cliente:", error);
+    }
   };
 
   return (
@@ -103,12 +97,12 @@ const ClientList: React.FC = () => {
         {clientList.map((client) => (
           <div key={client.id} className="col-md-3">
             <CardClient
-              name={client.name}
+              name={client.firstName}
               salary={client.salary}
               companyValue={client.companyValue}
-              onSelect={() => handleSelectClient(client.name)}
+              onSelect={() => alert(`Cliente ${client.firstName} selecionado!`)}
               onEdit={() => handleOpenEditModal(client)}
-              onDelete={() => handleOpenDeleteModal(client.name)}
+              onDelete={() => handleOpenDeleteModal(client)}
             />
           </div>
         ))}
@@ -121,19 +115,24 @@ const ClientList: React.FC = () => {
           Criar Cliente
         </button>
       </div>
-      {modalDeleteIsOpen && selectedClientName && (
+      {modalDeleteIsOpen && selectedClient && (
         <DeleteModal
-          clientName={selectedClientName}
+          clientName={selectedClient.firstName}
           onClose={handleCloseDeleteModal}
           onConfirm={handleConfirmDelete}
         />
       )}
       {modalCreateIsOpen && (
-        <CreateClientModal onClose={handleCloseCreateModal} onCreate={handleCreateClient} />
+        <CreateClientModal
+          onClose={handleCloseCreateModal}
+          onCreate={handleCreateClient}
+          newClient={newClient}
+          setNewClient={setNewClient}
+        />
       )}
-      {modalEditIsOpen && editingClient && (
+      {modalEditIsOpen && selectedClient && (
         <EditClientModal
-          client={editingClient}
+          client={selectedClient}
           onClose={handleCloseEditModal}
           onUpdate={handleUpdateClient}
         />

@@ -1,25 +1,31 @@
-// src/components/CreateClientModal.tsx
-import React, { useState } from "react";
+import React from "react";
 
 interface CreateClientModalProps {
   onClose: () => void;
-  onCreate: (client: { name: string; salary: string; companyValue: string }) => void;
+  onCreate: () => void;
+  newClient: { firstName: string; salary: string; companyValue: string };
+  setNewClient: (client: { firstName: string; salary: string; companyValue: string }) => void;
 }
 
-const CreateClientModal: React.FC<CreateClientModalProps> = ({ onClose, onCreate }) => {
-  const [newClient, setNewClient] = useState({ name: "", salary: '', companyValue: '' });
-
-  const handleInputChange = (field: string, value: string | number) => {
+const CreateClientModal: React.FC<CreateClientModalProps> = ({
+  onClose,
+  onCreate,
+  newClient,
+  setNewClient,
+}) => {
+  const handleInputChange = (field: string, value: string) => {
     setNewClient({ ...newClient, [field]: value });
   };
 
   const handleCreate = () => {
-    if (newClient.name.trim()) {
-      onCreate(newClient);
-      setNewClient({ name: "", salary: '', companyValue: '' });
-    } else {
+    const { firstName, salary, companyValue } = newClient;
+
+    if (!firstName.trim() || !salary.trim() || !companyValue.trim()) {
       alert("Por favor, preencha todos os campos corretamente.");
+      return;
     }
+
+    onCreate();
   };
 
   return (
@@ -41,17 +47,17 @@ const CreateClientModal: React.FC<CreateClientModalProps> = ({ onClose, onCreate
                 type="text"
                 className="form-control"
                 placeholder="Digite o nome:"
-                value={newClient.name}
-                onChange={(e) => handleInputChange("name", e.target.value)}
+                value={newClient.firstName}
+                onChange={(e) => handleInputChange("firstName", e.target.value)}
               />
             </div>
             <div className="mb-3">
               <input
                 type="text"
-                className="form-control "
+                className="form-control"
                 placeholder="Digite o Salário:"
                 value={newClient.salary}
-                onChange={(e) => handleInputChange("salary", Number(e.target.value))}
+                onChange={(e) => handleInputChange("salary", e.target.value)}
               />
             </div>
             <div className="mb-3">
@@ -60,7 +66,7 @@ const CreateClientModal: React.FC<CreateClientModalProps> = ({ onClose, onCreate
                 className="form-control"
                 placeholder="Digite o valor da Empresa:"
                 value={newClient.companyValue}
-                onChange={(e) => handleInputChange("companyValue", Number(e.target.value))}
+                onChange={(e) => handleInputChange("companyValue", e.target.value)}
               />
             </div>
           </div>

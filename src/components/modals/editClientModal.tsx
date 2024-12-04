@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 
 interface EditClientModalProps {
-  client: { id: string; name: string; salary: string; companyValue: string }; 
+  client: { id: string; firstName: string; salary: string; companyValue: string }; 
   onClose: () => void; 
-  onUpdate: (updatedClient: { id: string; name: string; salary: string; companyValue: string }) => void; 
+  onUpdate: (updatedClient: { id: string; firstName: string; salary: string; companyValue: string }) => void; 
 }
 
 const EditClientModal: React.FC<EditClientModalProps> = ({ client, onClose, onUpdate }) => {
@@ -15,7 +15,7 @@ const EditClientModal: React.FC<EditClientModalProps> = ({ client, onClose, onUp
   };
 
   const handleUpdate = () => {
-    if (updatedClient.name.trim() && updatedClient.salary && updatedClient.companyValue) {
+    if (updatedClient.firstName.trim() && updatedClient.salary && updatedClient.companyValue) {
       onUpdate(updatedClient); 
       onClose(); 
     } else {
@@ -42,7 +42,7 @@ const EditClientModal: React.FC<EditClientModalProps> = ({ client, onClose, onUp
                 type="text"
                 className="form-control"
                 placeholder="Digite o nome:"
-                value={updatedClient.name}
+                value={updatedClient.firstName}
                 onChange={(e) => handleInputChange("name", e.target.value)}
               />
             </div>
