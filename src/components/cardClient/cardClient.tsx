@@ -3,8 +3,8 @@ import React from "react";
 
 interface CardClientProps {
   name: string;
-  salary: number;
-  companyValue: number;
+  salary: string;
+  companyValue: string;
   onSelect?: () => void;
   onEdit?: () => void;
   onDelete?: () => void;
@@ -24,10 +24,10 @@ const CardClient: React.FC<CardClientProps> = ({
         
         <h5 className="card-title d-flex justify-content-center fw-bold ">{name}</h5>
         <p className="card-text d-flex justify-content-center gap-2 m-2 p-0 ">
-          <p className="m-0 p-0">Salário:</p> R$ {salary.toLocaleString("pt-BR")}
+          <p className="m-0 p-0">Salário:</p> R$ {salary}
         </p>
         <p className="card-text d-flex justify-content-center gap-2 ">
-          <p className="m-0 p-0 fw-normal">Empresa:</p> R$ {companyValue.toLocaleString("pt-BR")}
+          <p className="m-0 p-0 fw-normal">Empresa:</p> R$ {companyValue}
         </p>
         <div className="d-flex justify-content-between gap-2 mb-0 pb-0">
           <button

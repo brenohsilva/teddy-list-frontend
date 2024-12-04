@@ -1,88 +1,142 @@
-
 import React, { useState } from "react";
 import CardClient from "../cardClient/cardClient";
 import DeleteModal from "../modals/deleteModal";
 import CreateClientModal from "../modals/createModal";
-import  styles from "./clientList.module.css";
+import EditClientModal from "../modals/editClientModal";
+import styles from "./clientList.module.css";
 
 const ClientList: React.FC = () => {
+  const [clientList, setClientList] = useState([
+    { id: "1", name: "João Silva", salary: "4000", companyValue: "900000" },
+    { id: "2", name: "Maria Santos", salary: "4500", companyValue: "1200000" },
+    { id: "3", name: "Carlos Oliveira", salary: "3800", companyValue: "750000" },
+    { id: "4", name: "Carlos Oliveira", salary: "3800", companyValue: "750000" },
+  ]);
 
-    const [clients, setClients] = useState([
-        { name: "João Silva", salary: 4000, companyValue: 900000 },
-        { name: "Maria Santos", salary: 4500, companyValue: 1200000 },
-        { name: "Carlos Oliveira", salary: 3800, companyValue: 750000 },
-        { name: "Carlos Oliveira", salary: 3800, companyValue: 750000 },
-      ])
+  const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false);
+  const [modalCreateIsOpen, setModalCreateIsOpen] = useState(false);
+  const [modalEditIsOpen, setModalEditIsOpen] = useState(false);
 
-  const [selectedClient, setSelectedClient] = useState<string | null>(null)
-  const [isCreateModalOpen, setCreateModalOpen] = useState<boolean>(false);
-  const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  const [newClient, setNewClient] = useState({ name: "", salary: 0, companyValue: 0 });
+  const [selectedClientName, setSelectedClientName] = useState<string | null>(null);
+  const [editingClient, setEditingClient] = useState<{
+    id: string;
+    name: string;
+    salary: string;
+    companyValue: string;
+  } | null>(null);
 
-  const handleDeleteClick = (name: string) => {
-    setSelectedClient(name);
-    setModalOpen(true);
+  const [newClient, setNewClient] = useState({
+    name: "",
+    salary: "",
+    companyValue: "",
+  });
+
+  const handleOpenDeleteModal = (name: string) => {
+    setSelectedClientName(name);
+    setModalDeleteIsOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setSelectedClient(null);
-    setModalOpen(false);
+  const handleCloseDeleteModal = () => {
+    setSelectedClientName(null);
+    setModalDeleteIsOpen(false);
   };
 
   const handleConfirmDelete = () => {
-    alert(`Cliente ${selectedClient} excluído!`);
-    handleCloseModal();
+    setClientList(clientList.filter((client) => client.name !== selectedClientName));
+    handleCloseDeleteModal();
   };
 
-  const handleOpenCreateModal = () => setCreateModalOpen(true);
-  const handleCloseCreateModal = () => setCreateModalOpen(false);
+  const handleOpenCreateModal = () => setModalCreateIsOpen(true);
+  const handleCloseCreateModal = () => setModalCreateIsOpen(false);
 
   const handleCreateClient = () => {
-    setClients([...clients, newClient]);
-    setCreateModalOpen(false);
-    setNewClient({ name: "", salary: 0, companyValue: 0 });
+    setClientList([
+      ...clientList,
+      {
+        id: String(Date.now()), // Gera um ID único
+        ...newClient,
+      },
+    ]);
+    setModalCreateIsOpen(false);
+    setNewClient({ name: "", salary: "", companyValue: "" });
   };
 
+  const handleOpenEditModal = (client: {
+    id: string;
+    name: string;
+    salary: string;
+    companyValue: string;
+  }) => {
+    setEditingClient(client);
+    setModalEditIsOpen(true);
+  };
 
-  const handleSelect = (name: string) => {
+  const handleCloseEditModal = () => {
+    setEditingClient(null);
+    setModalEditIsOpen(false);
+  };
+
+  const handleUpdateClient = (updatedClient: {
+    id: string;
+    name: string;
+    salary: string;
+    companyValue: string;
+  }) => {
+    setClientList((prevClients) =>
+      prevClients.map((client) =>
+        client.id === updatedClient.id ? updatedClient : client
+      )
+    );
+    handleCloseEditModal();
+  };
+
+  const handleSelectClient = (name: string) => {
     alert(`Cliente ${name} selecionado!`);
   };
 
-  const handleEdit = (name: string) => {
-    alert(`Editar cliente: ${name}`);
-  };
-
   return (
-    <div className=" clientList container mt-5 ">
-      <h5 className="mb-4 fw-normal"><strong>{clients.length} </strong>clientes encontrados:</h5>
+    <div className="clientList container mt-5">
+      <h5 className="mb-4 fw-normal">
+        <strong>{clientList.length} </strong>clientes encontrados:
+      </h5>
       <div className="row">
-        {clients.map((client, index) => (
-          <div key={index} className="col-md-3 ">
+        {clientList.map((client) => (
+          <div key={client.id} className="col-md-3">
             <CardClient
               name={client.name}
               salary={client.salary}
               companyValue={client.companyValue}
-              onSelect={() => handleSelect(client.name)}
-              onEdit={() => handleEdit(client.name)}
-              onDelete={() => handleDeleteClick(client.name)}
+              onSelect={() => handleSelectClient(client.name)}
+              onEdit={() => handleOpenEditModal(client)}
+              onDelete={() => handleOpenDeleteModal(client.name)}
             />
           </div>
         ))}
       </div>
       <div className="d-flex justify-content-center w-100 mt-5">
-        <button className={`btn btn-none w-100 ${styles.buttonColor}`} onClick={handleOpenCreateModal}>
+        <button
+          className={`btn btn-none w-100 ${styles.buttonColor}`}
+          onClick={handleOpenCreateModal}
+        >
           Criar Cliente
         </button>
       </div>
-      {isModalOpen && selectedClient && (
+      {modalDeleteIsOpen && selectedClientName && (
         <DeleteModal
-          clientName={selectedClient}
-          onClose={handleCloseModal}
+          clientName={selectedClientName}
+          onClose={handleCloseDeleteModal}
           onConfirm={handleConfirmDelete}
         />
       )}
-      {isCreateModalOpen && (
+      {modalCreateIsOpen && (
         <CreateClientModal onClose={handleCloseCreateModal} onCreate={handleCreateClient} />
+      )}
+      {modalEditIsOpen && editingClient && (
+        <EditClientModal
+          client={editingClient}
+          onClose={handleCloseEditModal}
+          onUpdate={handleUpdateClient}
+        />
       )}
     </div>
   );
