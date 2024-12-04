@@ -29,3 +29,14 @@ p{
     color: white;
     
 }
+
+.buttonPrimaryColor {
+    border: 1px solid #ec6724;
+    font-weight: 600;
+    color: #ec6724;
+}
+
+.buttonPrimaryColor:hover{
+    background-color: #ec6724 ;
+    
+}
