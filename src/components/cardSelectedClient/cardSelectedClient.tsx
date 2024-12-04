@@ -1,24 +1,22 @@
 // src/components/CardClient.tsx
 import React from "react";
-import styles from './cardClient.module.css'
-interface CardClientProps {
+import styles from '../cardClient/cardClient.module.css'
+interface SelectedClientCardProps {
   name: string;
   salary: string;
   companyValue: string;
   isSelected?: boolean;
   onSelect?: () => void;
   onEdit?: () => void;
-  onDelete?: () => void;
+  onRemove?: () => void;
 }
 
-const CardClient: React.FC<CardClientProps> = ({
+const SelectedClientCard: React.FC<SelectedClientCardProps> = ({
   name,
   salary,
   companyValue,
   isSelected,
-  onSelect,
-  onEdit,
-  onDelete,
+  onRemove,
 }) => {
   return (
     <div className={`card shadow-sm p-2 pb-0 mb-2 ${
@@ -33,22 +31,10 @@ const CardClient: React.FC<CardClientProps> = ({
         <p className="card-text d-flex justify-content-center gap-2 ">
           <p className="m-0 p-0 fw-normal">Empresa:</p> R$ {companyValue}
         </p>
-        <div className="d-flex justify-content-between gap-2 mb-0 pb-0">
-          <button
-            className="btn d-flex align-items-center gap-1 "
-            onClick={onSelect}
-          >
-            <i className="bi bi-plus-lg "></i> 
-          </button>
-          <button
-            className="btn  d-flex text-black align-items-center gap-1"
-            onClick={onEdit}
-          >
-            <i className="bi bi-pencil"></i>
-          </button>
+        <div className="d-flex justify-content-end gap-2 mb-0 pb-0">
           <button
             className="btn text-danger d-flex align-items-center gap-1"
-            onClick={onDelete}
+            onClick={onRemove}
           >
             <i className="bi bi-trash"></i> 
           </button>
@@ -58,4 +44,4 @@ const CardClient: React.FC<CardClientProps> = ({
   );
 };
 
-export default CardClient;
+export default SelectedClientCard;

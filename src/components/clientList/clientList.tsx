@@ -6,10 +6,12 @@ import EditClientModal from "../modals/editClientModal";
 
 import styles from "./clientList.module.css";
 import { Client, createClient, deleteClient, getClients, updateClient } from "../../api/clientService";
+import { useSelectedClients } from "../context/SelectedClientContext";
 
 const ClientList: React.FC = () => {
   const [clientList, setClientList] = useState<Client[]>([]);
   const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false);
+  const { selectedClients, addClient, removeClient } = useSelectedClients();
   const [modalCreateIsOpen, setModalCreateIsOpen] = useState(false);
   const [modalEditIsOpen, setModalEditIsOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
@@ -88,6 +90,14 @@ const ClientList: React.FC = () => {
     }
   };
 
+  const handleSelectClient = (client: Client) => {
+    if (selectedClients.find((c) => c.id === client.id)) {
+      removeClient(client.id);
+    } else {
+      addClient(client);
+    }
+  };
+
   return (
     <div className="clientList container mt-5">
       <h5 className="mb-4 fw-normal">
@@ -100,9 +110,12 @@ const ClientList: React.FC = () => {
               name={client.firstName}
               salary={client.salary}
               companyValue={client.companyValue}
-              onSelect={() => alert(`Cliente ${client.firstName} selecionado!`)}
+             
               onEdit={() => handleOpenEditModal(client)}
               onDelete={() => handleOpenDeleteModal(client)}
+              isSelected={selectedClients.some((c) => c.id === client.id)}
+              onSelect={() => handleSelectClient(client)}
+              
             />
           </div>
         ))}
