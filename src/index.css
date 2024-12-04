@@ -40,3 +40,14 @@ p{
     background-color: #ec6724 ;
     
 }
+
+nav a {
+    font-size: 16px;
+    font-weight: 500;
+    color: #ec6724;
+    
+  }
+  
+  .user-info {
+    font-size: 16px;
+  }
