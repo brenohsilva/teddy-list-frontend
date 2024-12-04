@@ -9,9 +9,13 @@
 }
 
 .cardSelected {
-  background-color: #cc7549;
+  background-color: #f8c4a9;
   p{
-    color: white;
+    color: rgb(0, 0, 0);
+  }
+
+  h5{
+    color: rgb(0, 0, 0);
   }
 }
 
