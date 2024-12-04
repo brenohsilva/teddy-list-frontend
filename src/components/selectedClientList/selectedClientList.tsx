@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useUser } from "../context/UserContext";
 import Header from "../header/header";
 import { useSelectedClients } from "../context/SelectedClientContext";
 import SelectedClientCard from "../cardSelectedClient/cardSelectedClient";
 import { Client } from "../../api/clientService";
+import { useNavigate } from "react-router-dom";
 
 const SelectedClientList: React.FC = () => {
   const { username } = useUser();
   const { selectedClients, removeClient, clearClients } = useSelectedClients();
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!username) {
+      navigate("/");
+    }
+  }, [username, navigate]); 
   const handleSelectClient = (client: Client) => {
     if (selectedClients.find((c) => c.id === client.id)) {
       removeClient(client.id);
