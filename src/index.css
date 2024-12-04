@@ -1,0 +1,53 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+
+body{
+    background-color: #f5f5f5;
+}
+
+header {
+    background-color: white;
+}
+
+p{
+    color: black;
+}
+
+.buttonAction {
+    border: 1px solid #ec6724;
+    font-weight: 600;
+    background-color: #ec6724;
+    color: white;
+}
+
+.buttonAction:hover{
+    background-color: #d65b1d ;
+    color: white;
+    
+}
+
+.buttonPrimaryColor {
+    border: 1px solid #ec6724;
+    font-weight: 600;
+    color: #ec6724;
+}
+
+.buttonPrimaryColor:hover{
+    background-color: #ec6724 ;
+    
+}
+
+nav a {
+    font-size: 16px;
+    font-weight: 500;
+    color: #ec6724;
+    
+  }
+  
+  .user-info {
+    font-size: 16px;
+  }
