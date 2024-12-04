@@ -20,16 +20,18 @@
     padding: 10px;
     font-size: 16px;
     margin-bottom: 20px;
-    width: 300px;
+    width: 400px;
     border: 1px solid #ccc;
     border-radius: 5px;
   }
   
   .button {
     padding: 10px 20px;
+    width: 400px;
     font-size: 16px;
+    font-weight: 600;
     color: #fff;
-    background-color: #007bff;
+    background-color: #ec6724;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -37,6 +39,6 @@
   }
   
   .button:hover {
-    background-color: #0056b3;
+    background-color: #c44c10;
   }
   
